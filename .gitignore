@@ -1,0 +1,13 @@
+__pycache__/
+.Python
+
+sub.mqtt.env/config.py
+flask.env/config.py
+
+flask.env/bin
+flask.env/include
+flask.env/lib
+
+sub.mqtt.env/bin
+sub.mqtt.env/include
+sub.mqtt.env/lib
