@@ -32,7 +32,7 @@ IoT sendor data persistence pipeline and reporting for my home aquaponics setup.
 	- Defined `Sensor.PersistTelemetry` function.
 	
 
-- System Management & Reporting App:
+### System Management & Reporting App:
 	-  ...
 
 
