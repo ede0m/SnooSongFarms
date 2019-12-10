@@ -1,0 +1,25 @@
+
+h1,h2, h3, h4 {
+	margin-top:  40px;
+}
+
+#reservoirs_table {
+	margin-top: 5%;
+}
+
+#update_sensor {
+	display: none;
+}
+
+#update_reservoir {
+	display: none;
+}
+
+.exit {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

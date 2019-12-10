@@ -1,10 +1,12 @@
 #!flask/bin/python
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from models import db, Reservoir, SystemSensor, SensorReading
 from operator import itemgetter
 
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object('config')
 
 # for mapping batch telemetry to postgres function sensor_telemetry array parameter
@@ -18,39 +20,91 @@ def index():
 	return "Snoo Song Farms - System Monitor API"
 
 
-@app.route('/api/reservoir', methods=['POST'])
-def create_reservoir():
+@app.route('/api/reservoir', methods=['GET', 'POST'])
+def reservoir():
+	
+	if request.method == 'GET':
+		
+		data = Reservoir.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new reservoir
+		if not request.json:
+			abort(400)
+
+		reservoir = Reservoir(
+			description=request.json['description'], 
+			gallons=request.json['gallons']
+		)
+
+		db.session.add(reservoir)
+		db.session.commit()
+
+		return jsonify(request.json), 201
+
+
+@app.route('/api/reserevoir/<reservoir_id>', methods=['POST'])
+def update_reservoir(reservoir_id):
 	
 	if not request.json:
 		abort(400)
 
-	reservoir = Reservoir(
-		description=request.json['description'], 
-		gallons=request.json['gallons']
-	)
+	reservoir = Reservoir.query.filter_by(reservoirid=reservoirid).first()
+	
+	# UPDATE resrvoir
+	if request.json['description']:
+		reserevoir.description = request.json['description']
+	if request.json['gallons']:
+		reservoir.gallons = request.json['gallons']
 
-	db.session.add(reservoir)
 	db.session.commit()
+	return jsonify(reserevoir.as_dict()), 201
 
-	return jsonify(request.json), 201
+
+@app.route('/api/systemsensor', methods=['GET', 'POST'])
+def system_sensor():
+	
+	if request.method == 'GET':
+		
+		data = SystemSensor.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new sensor
+		if not request.json:
+			abort(400)
+
+		sensor = SystemSensor(
+			sensorid = request.json['sensorID'], 
+			reservoirid = request.json['reservoirID'],
+			description = request.json['description']
+		)
+		
+		db.session.add(sensor)
+		db.session.commit()
+
+		return jsonify(request.json), 201
 
 
-@app.route('/api/systemsensor', methods=['POST'])
-def create_systems_ensor():
+@app.route('/api/systemsensor/<sensor_id>', methods=['POST'])
+def update_sensor(sensor_id):
 	
 	if not request.json:
 		abort(400)
 
-	sensor = SystemSensor(
-		sensorid = request.json['sensorID'], 
-		reservoirid = request.json['reservoirID'],
-		description = request.json['description']
-	)
+	sensor = SystemSensor.query.filter_by(sensorid=sensor_id).first()
 	
-	db.session.add(sensor)
-	db.session.commit()
+	if request.json['reservoirID']:
+		sensor.reservoirid = request.json['reservoirID']
+	if request.json['description']:
+		sensor.description = request.json['description']
 
-	return jsonify(request.json), 201
+	db.session.commit()
+	return jsonify(sensor.as_dict()), 201
+
 
 
 @app.route('/api/telemetry', methods=['POST'])
@@ -70,8 +124,6 @@ def persist_telemetry():
 		'val' : value,
 		'ts' : timestamp
 	}
-
-	print(params)
 
 	result = db.session.execute("""select "Sensor"."PersistTelemetry"(
 		:sensorid, :measurement, :val, :ts)""", params)

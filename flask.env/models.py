@@ -18,12 +18,18 @@ class Reservoir(db.Model):
 	description = db.Column(db.String)
 	gallons = db.Column(db.Integer)
 
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class SystemSensor(db.Model):
 	__tablename__ = 'SystemSensors'
 	__table_args__ = {'schema' : 'Sensor'}
 	sensorid = db.Column(db.String, unique=True, primary_key = True)
 	reservoirid = db.Column(db.Integer)
 	description = db.Column(db.String)
+
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class SensorReading(db.Model):
 	__tablename__ = 'SensorReadings'

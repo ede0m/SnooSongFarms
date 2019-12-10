@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="" content="">
+  <meta name="garritt" content="">
+
+  <title>Snoo Song Farms</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/service.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Snoo Song Farms</a>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        
+        <h3> Reservoirs </h3>
+
+        <table class="table table-hover table-dark" id="reservoirs_table">
+          <thead>
+            <tr>
+              <th scope="col"> reservoirID </th>
+              <th scope="col"> description </th>
+              <th scope="col"> gallons </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <form id = "update_reservoir">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+            <div class="form-group">
+              <input id="reservoir_desc_input" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="gallons_input" type="number" class="form-control" placeholder="">
+            </div>
+            </div>
+            <div class="col-3">
+              <h5 id="reservoir_id_label"> NULL </h5>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            <div class="exit col-1">
+              X
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+
+        <h3> System Sensors </h3>
+
+        <table class="table table-hover table-dark" id="sensors_table">
+          <thead>
+            <tr>
+              <th scope="col"> sensorID </th>
+              <th scope="col"> reservoirID </th>
+              <th scope="col"> description </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <form id = "update_sensor">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+            <div class="form-group">
+              <input id="sensor_desc_input" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="reservoir_id_input" type="number" class="form-control" placeholder="">
+            </div>
+            </div>
+            <div class="col-3">
+              <h6 id="sensor_id_label"> NULL </h6>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            <div class="exit col-1">
+              X
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.slim.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

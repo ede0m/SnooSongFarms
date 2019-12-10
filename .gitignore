@@ -11,3 +11,7 @@ flask.env/lib
 sub.mqtt.env/bin
 sub.mqtt.env/include
 sub.mqtt.env/lib
+
+web/node_modules
+web/vendor
+web/package-lock.json
