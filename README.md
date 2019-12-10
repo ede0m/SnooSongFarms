@@ -2,7 +2,7 @@
 
 IoT sendor data persistence pipeline and reporting for my home aquaponics setup. 
 
-[diagram](snoosongfarms.png)
+![diagram](snoosongfarms.png)
 
 
 ### Currently Supporting:
