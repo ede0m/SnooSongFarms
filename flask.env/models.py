@@ -3,40 +3,50 @@ import datetime
 
 db = SQLAlchemy()
 
-"""
-class BaseModel(db.Model):
+
+class Base(db.Model):
  # Base data model for all objects
 	__abstract__ = True
-	# define here __repr__ and json methods or any common method
-	# that you need for all your models
-"""
+	
+	def as_dict(self):
+			return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Reservoir(db.Model):
+class Reservoir(Base):
 	__tablename__ = 'Reservoirs'
 	__table_args__ = {'schema': 'Aquaponics'}
-	reservoirid = db.Column(db.Integer, unique=True, primary_key = True)
+	reservoir_id = db.Column(db.Integer, unique=True, primary_key = True)
 	description = db.Column(db.String)
 	gallons = db.Column(db.Integer)
 
-	def as_dict(self):
-		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+class FishTank(Base):
+	__tablename__ = 'FishTanks'
+	__table_args__ = {'schema': 'Aquaponics'}
+	tank_id = db.Column(db.Integer, unique=True, primary_key = True)
+	reservoir_id = db.Column(db.Integer)
+	description = db.Column(db.String)
+	gallons = db.Column(db.Integer)
 
-class SystemSensor(db.Model):
+class GrowBed(Base):
+	__tablename__ = 'GrowBeds'
+	__table_args__ = {'schema': 'Aquaponics'}
+	growbed_id = db.Column(db.Integer, unique=True, primary_key = True)
+	reservoir_id = db.Column(db.Integer)
+	description = db.Column(db.String)
+	gallons = db.Column(db.Integer)
+
+class SystemSensor(Base):
 	__tablename__ = 'SystemSensors'
 	__table_args__ = {'schema' : 'Sensor'}
-	sensorid = db.Column(db.String, unique=True, primary_key = True)
-	reservoirid = db.Column(db.Integer)
+	sensor_id = db.Column(db.String, unique=True, primary_key = True)
+	reservoir_id = db.Column(db.Integer)
 	description = db.Column(db.String)
 
-	def as_dict(self):
-		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-class SensorReading(db.Model):
+class SensorReading(Base):
 	__tablename__ = 'SensorReadings'
 	__table_args__ = {'schema' : 'Sensor'}
-	telemetryid = db.Column(db.Integer, unique=True, primary_key = True)
-	sensorid = db.Column(db.String)
-	reservoirid = db.Column(db.Integer)
+	telemetry_id = db.Column(db.Integer, unique=True, primary_key = True)
+	sensor_id = db.Column(db.String)
+	reservoir_id = db.Column(db.Integer)
 	timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 	measurement = db.Column(db.String(20))
 	value = db.Column(db.Numeric(3,7))

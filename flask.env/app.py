@@ -1,12 +1,12 @@
 #!flask/bin/python
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
-from models import db, Reservoir, SystemSensor, SensorReading
+from models import db, Reservoir, GrowBed, FishTank, SystemSensor, SensorReading
 from operator import itemgetter
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config.from_object('config')
 
 # for mapping batch telemetry to postgres function sensor_telemetry array parameter
@@ -31,7 +31,7 @@ def reservoir():
 
 	else:
 		# CREATE new reservoir
-		if not request.json:
+		if not request.json:	
 			abort(400)
 
 		reservoir = Reservoir(
@@ -41,26 +41,123 @@ def reservoir():
 
 		db.session.add(reservoir)
 		db.session.commit()
-
 		return jsonify(request.json), 201
 
 
-@app.route('/api/reserevoir/<reservoir_id>', methods=['POST'])
+@app.route('/api/reservoir/<reservoir_id>', methods=['POST'])
 def update_reservoir(reservoir_id):
 	
 	if not request.json:
+		print(request)
 		abort(400)
 
-	reservoir = Reservoir.query.filter_by(reservoirid=reservoirid).first()
+	reservoir = Reservoir.query.filter_by(reservoir_id=reservoir_id).first()
 	
 	# UPDATE resrvoir
 	if request.json['description']:
-		reserevoir.description = request.json['description']
+		reservoir.description = request.json['description']
 	if request.json['gallons']:
 		reservoir.gallons = request.json['gallons']
 
 	db.session.commit()
-	return jsonify(reserevoir.as_dict()), 201
+	return jsonify(reservoir.as_dict()), 201
+
+
+
+@app.route('/api/fishtank', methods=['GET', 'POST'])
+def fishtank():
+	
+	if request.method == 'GET':
+		
+		data = FishTank.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new tank
+		if not request.json:	
+			abort(400)
+
+		tank = FishTank(
+			description=request.json['description'], 
+			gallons=request.json['gallons'],
+			reservoir_id=request.json['reservoirID']
+		)
+
+		db.session.add(tank)
+		db.session.commit()
+		return jsonify(request.json), 201
+
+
+@app.route('/api/fishtank/<tank_id>', methods=['POST'])
+def update_fishtank(tank_id):
+	
+	if not request.json:
+		abort(400)
+
+	print(tank_id)
+
+	tank = FishTank.query.filter_by(tank_id=tank_id).first()
+	
+	# UPDATE tank
+	if request.json['description']:
+		tank.description = request.json['description']
+	if request.json['gallons']:
+		tank.gallons = request.json['gallons']
+	if request.json['reservoirID']:
+		tank.gallons = request.json['reservoirID']
+
+
+	print(request.json)
+
+	db.session.commit()
+	return jsonify(tank.as_dict()), 201
+
+
+@app.route('/api/growbed', methods=['GET', 'POST'])
+def growbed():
+	
+	if request.method == 'GET':
+		
+		data = GrowBed.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new tank
+		if not request.json:	
+			abort(400)
+
+		growbed = GrowBed(
+			description=request.json['description'], 
+			gallons=request.json['gallons'],
+			reservoir_id=request.json['reservoirID']
+		)
+
+		db.session.add(growbed)
+		db.session.commit()
+		return jsonify(request.json), 201
+
+
+@app.route('/api/growbed/<growbed_id>', methods=['POST'])
+def update_growbed(growbed_id):
+	
+	if not request.json:
+		print(request)
+		abort(400)
+
+	growbed = GrowBed.query.filter_by(growbed_id=growbed_id).first()
+	
+	# UPDATE tank
+	if request.json['description']:
+		growbed.description = request.json['description']
+	if request.json['gallons']:
+		growbed.gallons = request.json['gallons']
+	if request.json['reservoirID']:
+		growbed.gallons = request.json['reservoirID']
+
+	db.session.commit()
+	return jsonify(growbed.as_dict()), 201
 
 
 @app.route('/api/systemsensor', methods=['GET', 'POST'])
@@ -95,10 +192,10 @@ def update_sensor(sensor_id):
 	if not request.json:
 		abort(400)
 
-	sensor = SystemSensor.query.filter_by(sensorid=sensor_id).first()
+	sensor = SystemSensor.query.filter_by(sensor_id=sensor_id).first()
 	
 	if request.json['reservoirID']:
-		sensor.reservoirid = request.json['reservoirID']
+		sensor.reservoir_id = request.json['reservoirID']
 	if request.json['description']:
 		sensor.description = request.json['description']
 
@@ -139,6 +236,7 @@ def persist_telemetry_batch():
 		abort(400)
 
 	batch = {"batch": list(map(ig, request.json['batch']))}
+	print(batch)
 
 	result = db.session.execute("""select "Sensor"."PersistTelemetryBatch"(
 		CAST(:batch AS "Sensor".sensor_telemetry[]))""", batch)
