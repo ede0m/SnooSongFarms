@@ -1,9 +1,10 @@
 #!flask/bin/python
 from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
-from models import db, Reservoir, GrowBed, FishTank, SystemSensor, SensorReading
+from models import fish_types
+from models import db, Reservoir, GrowBed, FishTank, Substrate, Fish
+from models import SystemSensor, SensorReading
 from operator import itemgetter
-
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -12,8 +13,12 @@ app.config.from_object('config')
 # for mapping batch telemetry to postgres function sensor_telemetry array parameter
 ig = itemgetter("sensorID", "measurement", "value", "timestamp") 
 
+# database conn
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config["DB_CONN"]
 db.init_app(app)
+
+
+## ENDPOINTS ##
 
 @app.route('/api')
 def index():
@@ -105,13 +110,107 @@ def update_fishtank(tank_id):
 	if request.json['gallons']:
 		tank.gallons = request.json['gallons']
 	if request.json['reservoirID']:
-		tank.gallons = request.json['reservoirID']
-
-
-	print(request.json)
+		tank.reservoir_id = request.json['reservoirID']
 
 	db.session.commit()
 	return jsonify(tank.as_dict()), 201
+
+@app.route('/api/fish', methods=['GET', 'POST'])
+def fish():
+	
+	if request.method == 'GET':
+		
+		data = Fish.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new substrate
+		if not request.json:	
+			abort(400)
+
+		fish = Fish(
+			description=request.json['description'], 
+			tank_id=request.json['tankID'],
+			size_inch = request.json['inchSize'],
+			fish_type = request.json['fishType']
+		)
+
+		db.session.add(fish)
+		db.session.commit()
+		return jsonify(request.json), 201
+
+
+@app.route('/api/fish/<fish_id>', methods=['POST'])
+def update_fish(fish_id):
+	
+	if not request.json:
+		abort(400)
+
+	fish = Fish.query.filter_by(fish_id=fish_id).first()
+	
+	# UPDATE tank
+	if request.json['description']:
+		fish.description = request.json['description']
+	if request.json['tankID']:
+		fish.tank_id = request.json['tankID'],
+	if request.json['inchSize']:
+		fish.size_inch = request.json['inchSize'],
+	if request.json['fishType']:
+		fish.fish_type = request.json['fishType']
+
+	db.session.commit()
+	return jsonify(fish.as_dict()), 201
+
+
+@app.route('/api/types', methods=['GET'])
+def get_fish_types():
+	types = {
+		"fish_types" : list(fish_types)
+	}
+	return jsonify(types), 201
+
+
+@app.route('/api/substrate', methods=['GET', 'POST'])
+def substrate():
+	
+	if request.method == 'GET':
+		
+		data = Substrate.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new substrate
+		if not request.json:	
+			abort(400)
+
+		substrate = Substrate(
+			description=request.json['description'], 
+			tank_id=request.json['tankID'],
+		)
+
+		db.session.add(substrate)
+		db.session.commit()
+		return jsonify(request.json), 201
+
+
+@app.route('/api/substrate/<substrate_id>', methods=['POST'])
+def update_substrate(substrate_id):
+	
+	if not request.json:
+		abort(400)
+
+	substrate = Substrate.query.filter_by(substrate_id=substrate_id).first()
+	
+	# UPDATE tank
+	if request.json['description']:
+		substrate.description = request.json['description']
+	if request.json['tankID']:
+		substrate.tank_id = request.json['tankID']
+
+	db.session.commit()
+	return jsonify(substrate.as_dict()), 201
 
 
 @app.route('/api/growbed', methods=['GET', 'POST'])
@@ -154,7 +253,7 @@ def update_growbed(growbed_id):
 	if request.json['gallons']:
 		growbed.gallons = request.json['gallons']
 	if request.json['reservoirID']:
-		growbed.gallons = request.json['reservoirID']
+		growbed.reservoir_id = request.json['reservoirID']
 
 	db.session.commit()
 	return jsonify(growbed.as_dict()), 201

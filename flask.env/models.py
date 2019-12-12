@@ -1,11 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import ENUM
 import datetime
 
 db = SQLAlchemy()
 
+# DB defined Enums
+fish_types = ('unknown', 'neon_tetra', 'amano_shrimp')
+fish_types_enum = ENUM(*fish_types, name="fish_types")
 
-class Base(db.Model):
  # Base data model for all objects
+class Base(db.Model):
 	__abstract__ = True
 	
 	def as_dict(self):
@@ -25,6 +29,22 @@ class FishTank(Base):
 	reservoir_id = db.Column(db.Integer)
 	description = db.Column(db.String)
 	gallons = db.Column(db.Integer)
+
+class Substrate(Base):
+	__tablename__ = 'Substrates'
+	__table_args__ = {'schema': 'Aquaponics'}
+	substrate_id = db.Column(db.Integer, unique=True, primary_key = True)
+	tank_id = db.Column(db.Integer)
+	description = db.Column(db.String)
+
+class Fish(Base):
+	__tablename__ = 'Fish'
+	__table_args__ = {'schema': 'Aquaponics'}
+	fish_id = db.Column(db.Integer, unique=True, primary_key = True)
+	tank_id = db.Column(db.Integer)
+	description = db.Column(db.String)
+	size_inch = db.Column(db.Numeric(2,5))
+	fish_type = db.Column(fish_types_enum)
 
 class GrowBed(Base):
 	__tablename__ = 'GrowBeds'
