@@ -59,7 +59,4 @@ TODO:
 -- 
 - service to interact with Smart-Plug light timers
 
---
-
-- system management and Reporting app .. 
 
