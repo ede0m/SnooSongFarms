@@ -92,8 +92,8 @@
         <table class="table table-hover table-dark" id="sensors_table">
           <thead>
             <tr>
-              <th scope="col"> reservoirID </th>
               <th scope="col"> sensorID </th>
+              <th scope="col"> reservoirID </th>
               <th scope="col"> description </th>
             </tr>
           </thead>
@@ -145,8 +145,10 @@
         <table class="table table-hover table-dark" id="tanks_table">
           <thead>
             <tr>
-              <th scope="col"> reservoirID </th>
               <th scope="col"> tankID </th>
+              <th scope="col"> reservoirID </th>
+              <th scope="col"> substrateID </th>
+              <th scope="col"> lightID </th>
               <th scope="col"> description </th>
               <th scope="col"> gallons </th>
             </tr>
@@ -163,10 +165,16 @@
               <input id="tank_desc_input" class="form-control" placeholder="">
             </div>
             <div class="form-group">
+              <input id="tank_gallons_input" type="number" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
               <select id="tank_reservoir_id_select" class="form-control"></select>
             </div>
             <div class="form-group">
-              <input id="tank_gallons_input" type="number" class="form-control" placeholder="">
+              <select id="tank_substrate_id_select" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <select id="tank_light_id_select" class="form-control"></select>
             </div>
 
             </div>
@@ -196,8 +204,8 @@
         <table class="table table-hover table-dark" id="fish_table">
           <thead>
             <tr>
-              <th scope="col"> tankID </th>
               <th scope="col"> fishID </th>
+              <th scope="col"> tankID </th>
               <th scope="col"> fishType </th>
               <th scope="col"> inchSize </th>
               <th scope="col"> description </th>
@@ -252,7 +260,6 @@
         <table class="table table-hover table-dark" id="substrates_table">
           <thead>
             <tr>
-              <th scope="col"> tankID </th>
               <th scope="col"> substrateID </th>
               <th scope="col"> description </th>
             </tr>
@@ -268,10 +275,6 @@
             <div class="form-group">
               <input id="substrate_desc_input" class="form-control" placeholder="">
             </div>
-            <div class="form-group">
-              <select id="substrate_tank_id_select" class="form-control"></select>
-            </div>
-
             </div>
             <div class="col form_control">
               <div class="row">
@@ -304,8 +307,10 @@
         <table class="table table-hover table-dark" id="growbeds_table">
           <thead>
             <tr>
-              <th scope="col"> reservoirID </th>
               <th scope="col"> growbedID </th>
+              <th scope="col"> reservoirID </th>
+              <th scope="col"> substrateID </th>
+              <th scope="col"> lightID </th>
               <th scope="col"> description </th>
               <th scope="col"> gallons </th>
             </tr>
@@ -322,10 +327,16 @@
               <input id="growbed_desc_input" class="form-control" placeholder="">
             </div>
             <div class="form-group">
+              <input id="growbed_gallons_input" type="number" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
               <select id="growbed_reservoir_id_select" class="form-control"></select>
             </div>
             <div class="form-group">
-              <input id="growbed_gallons_input" type="number" class="form-control" placeholder="">
+              <select id="growbed_substrate_id_select" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <select id="growbed_light_id_select" class="form-control"></select>
             </div>
 
             </div>
@@ -334,6 +345,61 @@
                 <div class="col"><h6 id="growbed_id_label"> NULL </h6></div>
                 <div class="col">
                   <div><button id="submit_growbed_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+
+      <!-- Lights -->
+      <div class="row title_row">
+          <h3> Lights</h3>
+          <div class="col text-center">
+            <button id="add_light_button" type="button" class="btn btn-success add_button">+</button>
+          </div>
+        </div>
+        <hr>
+        <table class="table table-hover table-dark" id="lights_table">
+          <thead>
+            <tr>
+              <th scope="col"> lightID </th>
+              <th scope="col"> spectrumK </th>
+              <th scope="col"> lumens </th>
+              <th scope="col"> watts </th>
+              <th scope="col"> description </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <form class="farm_form" id="update_light">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+            <div class="form-group">
+              <input id="light_desc_input" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="light_spectrum_input" type="number" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="light_lumens_input" type="number" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="light_watts_input" type="number" class="form-control" placeholder="">
+            </div>            
+
+            </div>
+            <div class="col form_control">
+              <div class="row">
+                <div class="col"><h6 id="light_id_label"> NULL </h6></div>
+                <div class="col">
+                  <div><button id="submit_light_button" type="button" class="btn btn-success submit">Submit</button></div>
                   <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
                 </div> 
               </div>

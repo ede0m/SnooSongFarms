@@ -29,12 +29,13 @@ class FishTank(Base):
 	reservoir_id = db.Column(db.Integer)
 	description = db.Column(db.String)
 	gallons = db.Column(db.Integer)
+	substrate_id = db.Column(db.Integer)
+	light_id = db.Column(db.Integer)
 
 class Substrate(Base):
 	__tablename__ = 'Substrates'
 	__table_args__ = {'schema': 'Aquaponics'}
 	substrate_id = db.Column(db.Integer, unique=True, primary_key = True)
-	tank_id = db.Column(db.Integer)
 	description = db.Column(db.String)
 
 class Fish(Base):
@@ -45,6 +46,7 @@ class Fish(Base):
 	description = db.Column(db.String)
 	size_inch = db.Column(db.Numeric(2,5))
 	fish_type = db.Column(fish_types_enum)
+	death = db.Column(db.DateTime)
 
 class GrowBed(Base):
 	__tablename__ = 'GrowBeds'
@@ -53,6 +55,17 @@ class GrowBed(Base):
 	reservoir_id = db.Column(db.Integer)
 	description = db.Column(db.String)
 	gallons = db.Column(db.Integer)
+	substrate_id = db.Column(db.Integer)
+	light_id = db.Column(db.Integer)
+
+class Light(Base):
+	__tablename__ = 'Lights'
+	__table_args__ = {'schema' : 'Aquaponics'}
+	light_id = db.Column(db.Integer, unique=True, primary_key = True)
+	spectrum_k = db.Column(db.Integer)
+	lumens = db.Column(db.Integer)
+	watts = db.Column(db.Integer)
+	description = db.Column(db.String)	
 
 class SystemSensor(Base):
 	__tablename__ = 'SystemSensors'
