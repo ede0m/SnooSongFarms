@@ -4,6 +4,14 @@ from models import db, Fish
 
 fish_api = Blueprint('fish_api', __name__)
 
+@fish_api.route('/api/fishby/fishtank/<tank_id>', methods=['GET'])
+def plant_by_tank(tank_id):
+		
+	data = Fish.query.filter_by(tank_id=tank_id)
+	data = [r.as_dict() for r in data]
+	return jsonify(data)
+
+
 @fish_api.route('/api/fish', methods=['GET', 'POST'])
 def fish():
 	

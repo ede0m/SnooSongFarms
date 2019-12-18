@@ -1,8 +1,12 @@
 from flask import Blueprint
 from flask import request, jsonify, abort
 from models import db, SystemSensor
+from operator import itemgetter
 
 system_sensor_api = Blueprint('system_sensor_api', __name__)
+
+# for mapping batch telemetry to postgres function sensor_telemetry array parameter
+ig = itemgetter("sensorID", "measurement", "value", "timestamp") 
 
 @system_sensor_api.route('/api/systemsensor', methods=['GET', 'POST'])
 def system_sensor():
@@ -80,7 +84,6 @@ def persist_telemetry_batch():
 		abort(400)
 
 	batch = {"batch": list(map(ig, request.json['batch']))}
-	print(batch)
 
 	result = db.session.execute("""select "Sensor"."PersistTelemetryBatch"(
 		CAST(:batch AS "Sensor".sensor_telemetry[]))""", batch)

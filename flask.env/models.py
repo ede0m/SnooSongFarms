@@ -48,6 +48,22 @@ class Fish(Base):
 	fish_type = db.Column(fish_types_enum)
 	death = db.Column(db.DateTime)
 
+class Plant(Base):
+	__tablename__ = 'Plants'
+	__table_args__ = {'schema': 'Aquaponics'}
+	plant_id = db.Column(db.Integer, unique=True, primary_key = True)
+	tank_id = db.Column(db.Integer)
+	growbed_id = db.Column(db.Integer)
+	description = db.Column(db.String)
+	start_plant = db.Column(db.DateTime)
+	end_germination = db.Column(db.DateTime)
+	end_life = db.Column(db.DateTime)
+	harvested = db.Column(db.Boolean, default=False)
+	yield_lbs = db.Column(db.Numeric(3,5))
+	max_height_inch = db.Column(db.Numeric(3,5))
+	count = db.Column(db.Integer)
+	units = db.Column(db.String)
+
 class GrowBed(Base):
 	__tablename__ = 'GrowBeds'
 	__table_args__ = {'schema': 'Aquaponics'}

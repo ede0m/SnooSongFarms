@@ -50,7 +50,7 @@ $.get(
 			
 			$('#tanks_table tbody:last-child').append(markup);
 			$('#fish_tank_id_select').append('<option value="'+ id +'">'+ id+' : '+desc+'</option>');
-
+			$('#plant_tank_id_select').append('<option value="'+ id +'">'+ id+' : '+desc+'</option>');
 		});
 	}
 );
@@ -105,6 +105,7 @@ $.get(
 			var markup = "<tr><td>"+id+"</td><td>"+resid+"</td><td>"+subid+
 				"</td><td>"+lid+"</td><td>"+desc+"</td><td>"+gallons+"</td></tr>";
 			
+			$('#plant_growbed_id_select').append('<option value="'+ id +'">'+ id+' : '+desc+'</option>');
 			$('#growbeds_table tbody:last-child').append(markup);
 
 		});
@@ -128,6 +129,27 @@ $.get(
 			$('#tank_light_id_select').append('<option value="'+ id +'">'+ id+' : '+desc+'</option>');
 			$('#growbed_light_id_select').append('<option value="'+ id +'">'+ id+' : '+desc+'</option>');
 			$('#lights_table tbody:last-child').append(markup);
+
+		});
+	}
+);
+
+$.get(
+	"http://127.0.0.1:5000/api/plant",
+	function(data) {
+		$.each(data, function(key, value ) {
+		  
+			var id = value.plant_id;
+			var desc = value.description;
+			var tid = value.tank_id;
+			var gbid = value.growbed_id;
+			var count = value.count;
+			var units = value.units;
+			var start = value.start_plant;
+			var markup = "<tr><td>"+id+"</td><td>"+tid+"</td><td>"+gbid+
+				"</td><td>"+desc+"</td><td>"+count+" "+units+"</td><td>"+start+"</td></tr>";
+			
+			$('#plants_table tbody:last-child').append(markup);
 
 		});
 	}
@@ -275,6 +297,33 @@ $( document ).ready(function() {
 		$('#update_light').css('display', 'inline');
 	});
 
+	$('#plants_table').on('click', 'tbody tr', function() {
+		var $headers = $("#plants_table th");
+		$cells = $(this).find("td");
+		data_p = {};
+		$cells.each(function(cellIndex) {
+			data_p[$($headers[cellIndex]).html().trim()] = $(this).html();
+		});
+
+		$('#plant_tank_id_select').on('change', function(e){
+			$('#plant_growbed_id_select').val(null);
+		});
+
+		$('#plant_growbed_id_select').on('change', function(e){
+			$('#plant_tank_id_select').val(null);
+		});
+
+		$('#plant_desc_input').val(data_p['description']);
+		$('#plant_tank_id_select').val(data_p['tankID']);
+		$('#plant_growbed_id_select').val(data_p['growbedID']);
+		var qty = data_p['count'].split(' ');
+		$('#plant_count_input').val(qty[0]);
+		$('#plant_unit_input').val(qty[1]);		
+		$('#plant_start_input').val(new Date(data_p['startPlant']).toISOString().substring(0, 10));
+		$('#plant_id_label').text(data_p['plantID']);
+		$('#update_plant').css('display', 'inline');
+	});
+
 	$('.add_button').on('click', function(){
 		
 		$('#update_sensor').css('display', 'none');
@@ -347,6 +396,28 @@ $( document ).ready(function() {
 			$('#light_spectrum_input').attr('placeholder', 'spectrum K');
 			$('#update_light').css('display', 'inline');
 		}
+		else if (this.id === 'add_plant_button')
+		{
+
+			$('#plant_desc_input').attr('placeholder', "description");
+			$('#plant_count_input').attr('placeholder', "count");
+			$('#plant_unit_input').attr('placeholder', 'units');
+			$('#plant_spectrum_input').attr('placeholder', 'spectrum K');
+			$('#plant_start_input').attr('placeholder', 'planted on');
+			
+			$('#plant_tank_id_select').append('<option value="" disabled selected hidden>select tank id ..</option>)');
+			$('#plant_growbed_id_select').append('<option value="" disabled selected hidden>select growbed id ..</option>)');
+			
+			$('#plant_tank_id_select').on('change', function(e){
+				$('#plant_growbed_id_select').val(null);
+			});
+
+			$('#plant_growbed_id_select').on('change', function(e){
+				$('#plant_tank_id_select').val(null);
+			});
+		
+			$('#update_plant').css('display', 'inline');
+		}
 	});
 
 	// update/create submit
@@ -417,8 +488,6 @@ $( document ).ready(function() {
 				"substrateID" : parseInt(subid),
 				"lightID" : parseInt(lid)
 			}
-
-			console.log(data);
 
 			var url = "http://127.0.0.1:5000/api/fishtank/" + tid;
 			if (createNew) {
@@ -552,6 +621,42 @@ $( document ).ready(function() {
 				}
 			});
 		}
+		else if (this.id === 'submit_plant_button')
+		{
+			var pid = $('#plant_id_label').text();
+			var tid = $('#plant_tank_id_select').val();
+			var gbid = $('#plant_growbed_id_select').val();
+			var desc = $('#plant_desc_input').val();
+			var count = $('#plant_count_input').val();
+			var units = $('#plant_unit_input').val();
+			var start = $('#plant_start_input').val();
+			
+			var data = {
+				"description" : desc,
+				"tankID": tid,
+				"growbedID" : gbid,
+				"count" : parseInt(count),
+				"units" : units,
+				"start": start
+			}
+
+			console.log(data);
+
+			var url = "http://127.0.0.1:5000/api/plant/" + pid;
+			if (createNew) {
+				url = "http://127.0.0.1:5000/api/plant";
+			}
+			$.ajax({
+				url:url,
+				type:"POST",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType:"json",
+				success: function(res){
+					location.reload(true);
+				}
+			});
+		}
 	});
 
 	// exit edit form
@@ -563,6 +668,7 @@ $( document ).ready(function() {
 		$('#update_fish').css('display', 'none');
 		$('#update_substrate').css('display', 'none');
 		$('#update_light').css('display', 'none');
+		$('#update_plant').css('display', 'none');
 		createNew = false;
 	});
 

@@ -24,6 +24,10 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
       <a class="navbar-brand" href="#">Snoo Song Farms</a>
+      <ul class="navbar-nav">
+        <li class="nav-item active"><a class="nav-link" href="index.html">System</a></li>
+        <li class="nav-item"><a class="nav-link" href="monitor.html">Monitor</a></li>
+      </ul>
     </div>
   </nav>
 
@@ -130,6 +134,61 @@
         </div>
       </form>
 
+      <!-- Lights -->
+      <div class="row title_row">
+          <h3> Lights</h3>
+          <div class="col text-center">
+            <button id="add_light_button" type="button" class="btn btn-success add_button">+</button>
+          </div>
+      </div>
+      <hr>
+      <table class="table table-hover table-dark" id="lights_table">
+        <thead>
+            <tr>
+              <th scope="col"> lightID </th>
+              <th scope="col"> spectrumK </th>
+              <th scope="col"> lumens </th>
+              <th scope="col"> watts </th>
+              <th scope="col"> description </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+      </table>
+
+      <form class="farm_form" id="update_light">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+            <div class="form-group">
+              <input id="light_desc_input" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="light_spectrum_input" type="number" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="light_lumens_input" type="number" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+              <input id="light_watts_input" type="number" class="form-control" placeholder="">
+            </div>            
+
+            </div>
+            <div class="col form_control">
+              <div class="row">
+                <div class="col"><h6 id="light_id_label"> NULL </h6></div>
+                <div class="col">
+                  <div><button id="submit_light_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+
       <br><br>
       <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
 
@@ -193,108 +252,6 @@
         </div>
       </form>
 
-      <!-- Fish -->
-      <div class="row title_row">
-          <h3> Fish </h3>
-          <div class="col text-center">
-            <button id="add_fish_button" type="button" class="btn btn-success add_button">+</button>
-          </div>
-        </div>
-        <hr>
-        <table class="table table-hover table-dark" id="fish_table">
-          <thead>
-            <tr>
-              <th scope="col"> fishID </th>
-              <th scope="col"> tankID </th>
-              <th scope="col"> fishType </th>
-              <th scope="col"> inchSize </th>
-              <th scope="col"> description </th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-
-        <form class="farm_form" id="update_fish">
-        <div>
-          <hr>
-          <div class="row">
-            <div class="col-8">
-            <div class="form-group">
-              <input id="fish_desc_input" class="form-control" placeholder="">
-            </div>
-            <div class="form-group">
-              <select id="fish_tank_id_select" class="form-control"></select>
-            </div>
-            <div class="form-group">
-              <input id="fish_size_input" type="number" step="0.1" class="form-control" placeholder="">
-            </div>
-            <div class="form-group">
-              <select class="form-control" id="fish_type_select"></select>
-            </div>
-
-            </div>
-            <div class="col form_control">
-              <div class="row">
-                <div class="col"><h6 id="fish_id_label"> NULL </h6></div>
-                <div class="col">
-                  <div><button id="submit_fish_button" type="button" class="btn btn-success submit">Submit</button></div>
-                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
-                </div> 
-              </div>
-
-            </div>
-          </div>
-          <hr>
-        </div>
-      </form>
-
-
-      <!-- Substrates -->
-      <div class="row title_row">
-          <h3> Substrates </h3>
-          <div class="col text-center">
-            <button id="add_substrate_button" type="button" class="btn btn-success add_button">+</button>
-          </div>
-        </div>
-        <hr>
-        <table class="table table-hover table-dark" id="substrates_table">
-          <thead>
-            <tr>
-              <th scope="col"> substrateID </th>
-              <th scope="col"> description </th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-
-        <form class="farm_form" id="update_substrate">
-        <div>
-          <hr>
-          <div class="row">
-            <div class="col-8">
-            <div class="form-group">
-              <input id="substrate_desc_input" class="form-control" placeholder="">
-            </div>
-            </div>
-            <div class="col form_control">
-              <div class="row">
-                <div class="col"><h6 id="substrate_id_label"> NULL </h6></div>
-                <div class="col">
-                  <div><button id="submit_substrate_button" type="button" class="btn btn-success submit">Submit</button></div>
-                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
-                </div> 
-              </div>
-
-            </div>
-          </div>
-          <hr>
-        </div>
-      </form>
-
-
-      <br><br>
-      <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
-
 
       <!-- GrowBed -->
       <div class="row title_row">
@@ -355,51 +312,54 @@
         </div>
       </form>
 
-      <!-- Lights -->
+      <br><br>
+      <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+
+      <!-- Fish -->
       <div class="row title_row">
-          <h3> Lights</h3>
+          <h3> Fish </h3>
           <div class="col text-center">
-            <button id="add_light_button" type="button" class="btn btn-success add_button">+</button>
+            <button id="add_fish_button" type="button" class="btn btn-success add_button">+</button>
           </div>
         </div>
         <hr>
-        <table class="table table-hover table-dark" id="lights_table">
+        <table class="table table-hover table-dark" id="fish_table">
           <thead>
             <tr>
-              <th scope="col"> lightID </th>
-              <th scope="col"> spectrumK </th>
-              <th scope="col"> lumens </th>
-              <th scope="col"> watts </th>
+              <th scope="col"> fishID </th>
+              <th scope="col"> tankID </th>
+              <th scope="col"> fishType </th>
+              <th scope="col"> inchSize </th>
               <th scope="col"> description </th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
 
-        <form class="farm_form" id="update_light">
+        <form class="farm_form" id="update_fish">
         <div>
           <hr>
           <div class="row">
             <div class="col-8">
             <div class="form-group">
-              <input id="light_desc_input" class="form-control" placeholder="">
+              <input id="fish_desc_input" class="form-control" placeholder="">
             </div>
             <div class="form-group">
-              <input id="light_spectrum_input" type="number" class="form-control" placeholder="">
+              <select id="fish_tank_id_select" class="form-control"></select>
             </div>
             <div class="form-group">
-              <input id="light_lumens_input" type="number" class="form-control" placeholder="">
+              <input id="fish_size_input" type="number" step="0.1" class="form-control" placeholder="">
             </div>
             <div class="form-group">
-              <input id="light_watts_input" type="number" class="form-control" placeholder="">
-            </div>            
+              <select class="form-control" id="fish_type_select"></select>
+            </div>
 
             </div>
             <div class="col form_control">
               <div class="row">
-                <div class="col"><h6 id="light_id_label"> NULL </h6></div>
+                <div class="col"><h6 id="fish_id_label"> NULL </h6></div>
                 <div class="col">
-                  <div><button id="submit_light_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button id="submit_fish_button" type="button" class="btn btn-success submit">Submit</button></div>
                   <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
                 </div> 
               </div>
@@ -410,6 +370,111 @@
         </div>
       </form>
 
+
+      <!-- Plants -->
+      <div class="row title_row">
+          <h3> Plants </h3>
+          <div class="col text-center">
+            <button id="add_plant_button" type="button" class="btn btn-success add_button">+</button>
+          </div>
+      </div>
+      <hr>
+      <table class="table table-hover table-dark" id="plants_table">
+        <thead>
+            <tr>
+              <th scope="col"> plantID </th>
+              <th scope="col"> tankID </th>
+              <th scope="col"> growbedID </th>
+              <th scope="col"> description </th>
+              <th scope="col"> count </th>
+              <th scope="col"> startPlant </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+      </table>
+
+      <form class="farm_form" id="update_plant">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+              <div class="form-group">
+                <input id="plant_desc_input" class="form-control" placeholder="">
+              </div>
+              <div class="form-group">
+                <select id="plant_tank_id_select" class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <select id="plant_growbed_id_select" class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <input id="plant_count_input" type="number" class="form-control" placeholder="">
+              </div>
+              <div class="form-group">
+                <input id="plant_unit_input" class="form-control" placeholder="">
+              </div>
+              <div class="form-group">
+                <input id="plant_start_input" type="date" class="form-control" placeholder="">
+              </div>
+            </div>
+
+
+            <div class="col form_control">
+              <div class="row">
+                <div class="col"><h6 id="plant_id_label"> NULL </h6></div>
+                <div class="col">
+                  <div><button id="submit_plant_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+
+      <!-- Substrates -->
+      <div class="row title_row">
+          <h3> Substrates </h3>
+          <div class="col text-center">
+            <button id="add_substrate_button" type="button" class="btn btn-success add_button">+</button>
+          </div>
+        </div>
+        <hr>
+        <table class="table table-hover table-dark" id="substrates_table">
+          <thead>
+            <tr>
+              <th scope="col"> substrateID </th>
+              <th scope="col"> description </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <form class="farm_form" id="update_substrate">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+            <div class="form-group">
+              <input id="substrate_desc_input" class="form-control" placeholder="">
+            </div>
+            </div>
+            <div class="col form_control">
+              <div class="row">
+                <div class="col"><h6 id="substrate_id_label"> NULL </h6></div>
+                <div class="col">
+                  <div><button id="submit_substrate_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
 
       </div>
     </div>

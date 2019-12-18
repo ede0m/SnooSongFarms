@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="" content="">
+  <meta name="garritt" content="">
+
+  <title>Snoo Song Farms</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/chartjs/Chart.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/monitor.js"></script>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Snoo Song Farms</a>
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">System</a></li>
+        <li class="nav-item active"><a class="nav-link" href="monitor.html">Monitor</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <!-- Query Form -->
+      <form id="query_form">
+          <div>
+            <br><br>
+            <hr>
+            <div class="row">
+              <div class="col-4">
+                <div id="query_by_header"><div class="name">Query By: </div></div>
+              </div>
+              <div class="col-6">
+               <div class="form-group">
+                  <select id="query_by_select" class="form-control">
+                    <option>growbed</option>
+                    <option>fishtank</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4">
+                <div id="query_by_header"><div class="name">Selection: </div></div>
+              </div>
+              <div class="col-6">
+               <div class="form-group">
+                  <select id="query_by_selection_select" class="form-control">
+                  </select>
+                </div>
+              </div>
+              <div class="col-2">
+                <button id="submit_query_button" type="button" class="btn btn-success submit">Go</button>
+              </div>
+            </div>
+            <hr>
+            <br><br>
+
+          </div>
+      </form>
+
+      <!-- Chart Stuff -->
+      <div class="row">
+        <div id="chart_time_filter" class="col-4">
+          <div class='col-12'>
+            <button class="btn btn-warning time_filter_button" type="button" id="all_time_buttom">all</button>
+            <button class="btn btn-warning time_filter_button" type="button" id="month_time_buttom">month</button>
+            <button class="btn btn-warning time_filter_button" type="button" id="day_time_buttom">today</button>
+          </div>
+        </div>
+        <div class='col-3'></div>
+        <div class="col-3" id="metric_cards">
+          <div class="metric_card"><button id='ph_chart_button' type="button" class="btn btn-info measurement_filter_button">PH</button></div>
+          <div class="metric_card"><button id='ec_chart_button' type="button" class="btn btn-info measurement_filter_button">EC</button></div>
+          <div class="metric_card"><button id='temp_chart_button' type="button" class="btn btn-info measurement_filter_button">TEMP</button></div>
+          <div class="metric_card"><button id='temp_chart_button' type="button" class="btn btn-info measurement_filter_button">LIGHT</button></div>
+          <hr>
+        </div>        
+
+      </div>
+
+      <div>
+        <canvas id="aggregateLineChart" width="300px" height="300px"></canvas>
+      </div>
+      <hr>
+
+      <br><br>
+
+      <!-- Plants -->
+      <div id="plant_monitor">
+        <div class="row title_row">
+          <h3> Plants </h3>
+        </div>
+        <hr>
+        <table class="table table-hover table-dark" id="plant_monitor_table">
+          <thead>
+              <tr>
+                <th scope="col"> plantID </th>
+                <th scope="col"> description </th>
+                <th scope="col"> count </th>
+                <th scope="col"> startPlant </th>
+                <th scope="col"> endGerm </th>
+                <th scope="col"> endLife </th>
+                <th scope="col"> harvest </th>
+                <th scope="col"> yieldLbs </th>
+                <th scope="col"> heightInch </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
+
+      <form class="farm_form" id="update_monitor_plants">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+
+              <div class="row">
+                <div class="col-3"><div class="name">end germination: </div></div>
+                <div class="form-group">
+                  <input id="plant_endgerm_input" type="date" class="form-control" placeholder="">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3"><div class="name">end life: </div></div>
+                <div class="form-group">
+                  <input id="plant_endlife_input" type="date" class="form-control" placeholder="">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3"><div class="name">harvested: </div></div>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1"></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3"><div class="name">yield lbs: </div></div>
+                <div class="form-group">
+                  <input id="plant_yield_input" type="number" step="0.1" class="form-control" placeholder="">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3"><div class="name">max height inches: </div></div>
+                <div class="form-group">
+                  <input id="plant_height_input" type="number" step="0.1" class="form-control" placeholder="">
+                </div>
+              </div>
+
+            </div>
+            <div class="col form_control">
+              <div class="row">
+                <div class="col"><h6 id="plant_id_monitor_label"> NULL </h6></div>
+                <div class="col">
+                  <div><button id="submit_plants_monitor_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+
+
+      <!-- Fish -->
+      <div id="fish_monitor">
+        <div class="row title_row">
+          <h3> Fish </h3>
+        </div>
+        <hr>
+        <table class="table table-hover table-dark" id="fish_monitor_table">
+          <thead>
+              <tr>
+                <th scope="col"> fishID </th>
+                <th scope="col"> description </th>
+                <th scope="col"> type </th>
+                <th scope="col"> sizeInch </th>
+                <th scope="col"> deathDate </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+      </div>
+
+      <form class="farm_form" id="update_monitor_fish">
+        <div>
+          <hr>
+          <div class="row">
+            <div class="col-8">
+              
+              <div class="row">
+                <div class="col-3"><div class="name">death date: </div></div>
+                <div class="form-group">
+                  <input id="fish_death_input" type="date" class="form-control" placeholder="">
+                </div>
+              </div>
+            
+            </div>
+            <div class="col form_control">
+              <div class="row">
+                <div class="col"><h6 id="fish_id_monitor_label"> NULL </h6></div>
+                <div class="col">
+                  <div><button id="submit_fish_monitor_button" type="button" class="btn btn-success submit">Submit</button></div>
+                  <div><button class="btn btn-warning exit" type="button"> Exit </button></div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </form>
+      
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

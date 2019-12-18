@@ -53,3 +53,47 @@ def update_fishtank(tank_id):
 
 	db.session.commit()
 	return jsonify(tank.as_dict()), 201
+
+
+@tank_api.route('/api/fishtank/telemetry/<tank_id>/<time>/<measurement>', methods=['GET'])
+def fishtank_telemetry(tank_id, time, measurement):
+	
+	# set time param
+	if time == 'month':
+		time_q = '1 month'
+	elif time == 'today':
+		time_q = '24 hours'
+	else:
+		time_q = '5 years' # probably want to figure out the right way to do this..
+
+	param = {
+		"tid": tank_id,
+		"time": time_q,
+		"measurement" : measurement
+	}
+	sql = """select value, timestamp from "Sensor"."SensorReadings"
+			where reservoir_id = (select reservoir_id from "Aquaponics"."FishTanks" where tank_id = :tid)
+			and measurement = :measurement
+			and timestamp BETWEEN NOW() - INTERVAL :time AND NOW()
+			order by timestamp asc """
+
+	result_ph = db.session.execute(sql, param)
+
+	values_ph = []
+	times_ph = []
+
+	for r in result_ph:
+		values_ph.append(r[0])
+		times_ph.append(r[1])
+
+	# ... similar queries for other sensor data
+
+	result = {
+		'values' : values_ph,
+		'times' : times_ph
+	}
+
+	return jsonify(result), 201
+
+
+

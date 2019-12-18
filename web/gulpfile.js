@@ -37,8 +37,10 @@ function modules() {
   var jquery = gulp.src([
       './node_modules/jquery/dist/*',
       '!./node_modules/jquery/dist/core.js'
-    ])
-    .pipe(gulp.dest('./vendor/jquery'));
+    ]).pipe(gulp.dest('./vendor/jquery'));
+
+  var chartjs = gulp.src('./node_modules/chart.js/dist/**/*')
+    .pipe(gulp.dest('./vendor/chartjs'))
   return merge(bootstrap, jquery);
 }
 
