@@ -33,7 +33,9 @@ IoT sendor data persistence pipeline and reporting for my home aquaponics setup.
 	
 
 ### System Management & Reporting App:
-	-  ...
+	-  interface to manage the system components and view data trends
+	-  just a cruddy jquery app
+	-  charting with [chartjs](https://www.chartjs.org/)
 
 
 ---------
@@ -48,7 +50,6 @@ TODO:
 --
 
 - REST restriction on max batch size
-- REST queries for Reservoir and System Sensor management
 - sub_client retry on failure 
 
 -- 
