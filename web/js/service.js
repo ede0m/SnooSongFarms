@@ -1,8 +1,9 @@
+var api_base_url = 'http://moedepi:5000/api/'; 
+
 var types = {}
 
-
 $.get(
-	"http://127.0.0.1:5000/api/reservoir",
+	api_base_url + "reservoir",
 	function(data) {
 		$.each(data, function(key, value ) {
 			var id = value.reservoir_id;
@@ -19,7 +20,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/systemsensor",
+	api_base_url + "systemsensor",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -35,7 +36,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/fishtank",
+	api_base_url + "fishtank",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -56,7 +57,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/fish",
+	api_base_url + "fish",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -74,7 +75,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/substrate",
+	api_base_url + "substrate",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -92,7 +93,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/growbed",
+	api_base_url + "growbed",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -113,7 +114,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/light",
+	api_base_url + "light",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -135,7 +136,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/plant",
+	api_base_url + "plant",
 	function(data) {
 		$.each(data, function(key, value ) {
 		  
@@ -156,7 +157,7 @@ $.get(
 );
 
 $.get(
-	"http://127.0.0.1:5000/api/types",
+	api_base_url + "types",
 	function(data) {
 		
 		$.each(data['fish_types'], function(i, d){
@@ -432,9 +433,9 @@ $( document ).ready(function() {
 				"gallons" : parseInt(gallons)
 			}
 
-			var url = "http://127.0.0.1:5000/api/reservoir/" + rid;
+			var url = api_base_url + "reservoir/" + rid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/reservoir";
+				url = api_base_url + "reservoir";
 			}
 			$.ajax({
 				url:url,
@@ -458,9 +459,9 @@ $( document ).ready(function() {
 				"reservoirID" : parseInt(rid)
 			}
 			
-			var url = "http://127.0.0.1:5000/api/systemsensor/" + sid;
+			var url = api_base_url + "systemsensor/" + sid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/systemsensor";
+				url = api_base_url + "systemsensor";
 			}
 			$.ajax({
 				url:url,
@@ -489,9 +490,9 @@ $( document ).ready(function() {
 				"lightID" : parseInt(lid)
 			}
 
-			var url = "http://127.0.0.1:5000/api/fishtank/" + tid;
+			var url = api_base_url + "fishtank/" + tid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/fishtank";
+				url = api_base_url + "fishtank";
 			}
 			$.ajax({
 				url:url,
@@ -521,9 +522,9 @@ $( document ).ready(function() {
 				"lightID" : parseInt(lid)
 			}
 
-			var url = "http://127.0.0.1:5000/api/growbed/" + gbid;
+			var url = api_base_url + "growbed/" + gbid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/growbed";
+				url = api_base_url + "growbed";
 			}
 			$.ajax({
 				url:url,
@@ -545,9 +546,9 @@ $( document ).ready(function() {
 				"tankID" : parseInt(tid)
 			}
 
-			var url = "http://127.0.0.1:5000/api/substrate/" + sid;
+			var url = api_base_url + "substrate/" + sid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/substrate";
+				url = api_base_url + "substrate";
 			}
 			$.ajax({
 				url:url,
@@ -576,9 +577,9 @@ $( document ).ready(function() {
 				"fishType" : type
 			}
 
-			var url = "http://127.0.0.1:5000/api/fish/" + fid;
+			var url = api_base_url + "fish/" + fid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/fish";
+				url = api_base_url + "fish";
 			}
 			$.ajax({
 				url:url,
@@ -606,9 +607,9 @@ $( document ).ready(function() {
 				"spectrumK": parseFloat(spec)
 			}
 
-			var url = "http://127.0.0.1:5000/api/light/" + lid;
+			var url = api_base_url + "light/" + lid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/light";
+				url = api_base_url + "light";
 			}
 			$.ajax({
 				url:url,
@@ -642,9 +643,9 @@ $( document ).ready(function() {
 
 			console.log(data);
 
-			var url = "http://127.0.0.1:5000/api/plant/" + pid;
+			var url = api_base_url + "plant/" + pid;
 			if (createNew) {
-				url = "http://127.0.0.1:5000/api/plant";
+				url = api_base_url + "plant";
 			}
 			$.ajax({
 				url:url,

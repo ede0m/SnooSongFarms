@@ -1,9 +1,11 @@
+var api_base_url = 'http://moedepi:5000/api/'; 
+
 var select_options = {};
 var chart_query_measurement = 'ph';
 var chart_query_time = 'today';
 
 $.get(
-	"http://127.0.0.1:5000/api/fishtank",
+	api_base_url + "fishtank",
 	function(data) {
 		select_options['fishtank'] = {};
 		$.each(data, function(key, value ) {
@@ -14,7 +16,7 @@ $.get(
 
 
 $.get(
-	"http://127.0.0.1:5000/api/growbed",
+	api_base_url + "growbed",
 	function(data) {
 		select_options['growbed'] = {};
 		$.each(data, function(key, value ) {
@@ -57,7 +59,7 @@ $( document ).ready(function() {
 			
 			// query plants in growbed
 			$.get(
-				"http://127.0.0.1:5000/api/plantby/growbed/" + gbid,
+				api_base_url + "plantby/growbed/" + gbid,
 				function(data) {
 					$.each(data, function(key, value ) {
 						var id = value.plant_id;
@@ -85,7 +87,7 @@ $( document ).ready(function() {
 			chart_query_measurement = 'ph';
 			chart_query_time = 'today';
 			var title = $('#query_by_selection_select option:selected').text();
-			var url = "http://127.0.0.1:5000/api/growbed/telemetry/" + gbid + '/' + chart_query_time + '/' + chart_query_measurement;
+			var url = api_base_url + "growbed/telemetry/" + gbid + '/' + chart_query_time + '/' + chart_query_measurement;
 			$.get(
 				url,
 				function(data) {
@@ -106,7 +108,7 @@ $( document ).ready(function() {
 			
 			// query fish in tank
 			$.get(
-				"http://127.0.0.1:5000/api/fishby/fishtank/" + tid,
+				api_base_url + "fishby/fishtank/" + tid,
 				function(data) {
 					$.each(data, function(key, value ) {
 						var id = value.fish_id;
@@ -123,7 +125,7 @@ $( document ).ready(function() {
 
 			// query plants in tank
 			$.get(
-				"http://127.0.0.1:5000/api/plantby/fishtank/" + tid,
+				api_base_url + "plantby/fishtank/" + tid,
 				function(data) {
 					$.each(data, function(key, value ) {
 						var id = value.plant_id;
@@ -154,7 +156,7 @@ $( document ).ready(function() {
 			chart_query_time = 'today';
 			var title = $('#query_by_selection_select option:selected').text();
 			console.log(title);
-			var url = "http://127.0.0.1:5000/api/fishtank/telemetry/" + tid + '/' + chart_query_time + '/' + chart_query_measurement;
+			var url = api_base_url + "fishtank/telemetry/" + tid + '/' + chart_query_time + '/' + chart_query_measurement;
 			$.get(
 				url,
 				function(data) {
@@ -214,10 +216,10 @@ $( document ).ready(function() {
 		var title = $('#query_by_selection_select option:selected').text();
 
 		if ($('#query_by_select').val() === 'growbed'){
-			var url = "http://127.0.0.1:5000/api/growbed/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
+			var url = api_base_url + "growbed/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
 		}
 		else if ($('#query_by_select').val() === 'fishtank'){
-			var url = "http://127.0.0.1:5000/api/fishtank/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
+			var url = api_base_url + "fishtank/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
 		}
 		$.get(
 			url,
@@ -236,10 +238,10 @@ $( document ).ready(function() {
 		var title = $('#query_by_selection_select option:selected').text();
 
 		if ($('#query_by_select').val() === 'growbed'){
-			var url = "http://127.0.0.1:5000/api/growbed/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
+			var url = api_base_url + "growbed/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
 		}
 		else if ($('#query_by_select').val() === 'fishtank'){
-			var url = "http://127.0.0.1:5000/api/fishtank/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
+			var url = api_base_url + "fishtank/telemetry/" + id + '/' + chart_query_time + '/' + chart_query_measurement;
 		}
 		$.get(
 			url,
