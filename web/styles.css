@@ -63,6 +63,7 @@ table td input {
 	float: right;
 	margin-left: 40px;
 	margin-top: 10px;
+	z-index: 99;
 }
 
 #metric_cards button {
