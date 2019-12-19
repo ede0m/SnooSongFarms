@@ -60,10 +60,8 @@ table td input {
 #metric_cards {
 	text-align: center;
 	display: none;
-	float: right;
 	margin-left: 40px;
 	margin-top: 10px;
-	z-index: 99;
 }
 
 #metric_cards button {
