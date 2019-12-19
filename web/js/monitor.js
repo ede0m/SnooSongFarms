@@ -2,14 +2,16 @@ var api_base_url = 'http://moedepi:5000/api/';
 
 var select_options = {};
 var chart_query_measurement = 'ph';
-var chart_query_time = 'today';
+var chart_query_time = 'month';
 
 $.get(
 	api_base_url + "fishtank",
 	function(data) {
 		select_options['fishtank'] = {};
-		$.each(data, function(key, value ) {
+		$.each(data, function(key, value) {
 	  		select_options['fishtank'][value.tank_id] = value.tank_id + " : " + value.description;
+			// set fishtanks first
+			$('#query_by_selection_select').append('<option value="'+ value.tank_id +'">'+ value.tank_id + " : " + value.description+'</option>');
 		});
 	}
 );
@@ -21,8 +23,6 @@ $.get(
 		select_options['growbed'] = {};
 		$.each(data, function(key, value ) {
 			select_options['growbed'][value.growbed_id] = value.growbed_id + " : " + value.description;
-			// set growbeds first
-			$('#query_by_selection_select').append('<option value="'+ value.growbed_id +'">'+ value.description+'</option>')
 		});
 	}
 );
@@ -42,7 +42,7 @@ $( document ).ready(function() {
 		
 		$('#query_by_selection_select').empty();
 		$.each(select_options[this.value], function(key, value){
-			$('#query_by_selection_select').append('<option value="'+ key +'">'+ value+'</option>')
+			$('#query_by_selection_select').append('<option value="'+ key +'">'+ value+'</option>');
 		});
 	});
 
@@ -85,7 +85,7 @@ $( document ).ready(function() {
 
 			// Chart data query when selecting growbed
 			chart_query_measurement = 'ph';
-			chart_query_time = 'today';
+			chart_query_time = 'month';
 			var title = $('#query_by_selection_select option:selected').text();
 			var url = api_base_url + "growbed/telemetry/" + gbid + '/' + chart_query_time + '/' + chart_query_measurement;
 			$.get(
@@ -153,7 +153,7 @@ $( document ).ready(function() {
 
 			// Chart data query when selecting tank
 			chart_query_measurement = 'ph';
-			chart_query_time = 'today';
+			chart_query_time = 'month';
 			var title = $('#query_by_selection_select option:selected').text();
 			console.log(title);
 			var url = api_base_url + "fishtank/telemetry/" + tid + '/' + chart_query_time + '/' + chart_query_measurement;
