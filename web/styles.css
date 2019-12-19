@@ -60,7 +60,9 @@ table td input {
 #metric_cards {
 	text-align: center;
 	display: none;
-	margin-left: 30px;
+	float: right;
+	margin-left: 40px;
+	margin-top: 10px;
 }
 
 #metric_cards button {
@@ -85,5 +87,6 @@ table td input {
 
 #chart_time_filter {
 	display: none;
-	margin-left: 50px;
+	margin-left: 40px;
+	margin-top: 10px;
 }

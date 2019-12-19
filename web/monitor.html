@@ -13,6 +13,7 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!--<script type="text/javascript" src="config.js"></script>-->
   <script src="vendor/chartjs/Chart.min.js"></script>
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="js/monitor.js"></script>
@@ -66,7 +67,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-2">
+              <div >
                 <button id="submit_query_button" type="button" class="btn btn-success submit">Go</button>
               </div>
             </div>
@@ -79,21 +80,19 @@
       <!-- Chart Stuff -->
       <div class="row">
         <div id="chart_time_filter" class="col-4">
-          <div class='col-12'>
-            <button class="btn btn-warning time_filter_button" type="button" id="all_time_buttom">all</button>
+            <button class="btn btn-warning time_filter_button" type="button" id="all_time_buttom">whole</button>
             <button class="btn btn-warning time_filter_button" type="button" id="month_time_buttom">month</button>
             <button class="btn btn-warning time_filter_button" type="button" id="day_time_buttom">today</button>
-          </div>
+
         </div>
-        <div class='col-3'></div>
-        <div class="col-3" id="metric_cards">
+        <div class="col-3"></div>
+        <div class="col-4" id="metric_cards">
           <div class="metric_card"><button id='ph_chart_button' type="button" class="btn btn-info measurement_filter_button">PH</button></div>
           <div class="metric_card"><button id='ec_chart_button' type="button" class="btn btn-info measurement_filter_button">EC</button></div>
           <div class="metric_card"><button id='temp_chart_button' type="button" class="btn btn-info measurement_filter_button">TEMP</button></div>
           <div class="metric_card"><button id='temp_chart_button' type="button" class="btn btn-info measurement_filter_button">LIGHT</button></div>
           <hr>
         </div>        
-
       </div>
 
       <div>
@@ -109,7 +108,7 @@
           <h3> Plants </h3>
         </div>
         <hr>
-        <table class="table table-hover table-dark" id="plant_monitor_table">
+        <table class="table table-hover table-dark table-responsive" id="plant_monitor_table">
           <thead>
               <tr>
                 <th scope="col"> plantID </th>
@@ -194,7 +193,7 @@
           <h3> Fish </h3>
         </div>
         <hr>
-        <table class="table table-hover table-dark" id="fish_monitor_table">
+        <table class="table table-hover table-dark table-responsive" id="fish_monitor_table">
           <thead>
               <tr>
                 <th scope="col"> fishID </th>
