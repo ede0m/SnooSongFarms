@@ -13,18 +13,13 @@
 
 Adafruit_ADS1115 ads;
 
-// WiFi
-// Make sure to update this for your own WiFi network!
 const char* ssid = "";
 const char* wifi_password = "";
 
-// MQTT
-// Make sure to update this for your own MQTT Broker!
 const char* mqtt_server = "";
 const char* mqtt_topic = "ph";
 const char* mqtt_username = "moedepi";
 const char* mqtt_password = "";
-// The client id identifies the ESP8266 device. Think of it a bit like a hostname (Or just a name, like Greg).
 const char clientID[] = "phSensorA.haoshiAnalogPh:";
 
 // PH sampling 
@@ -52,14 +47,11 @@ void setup() {
   // ads
   Wire.begin(D2, D1);
 
-  // Begin Serial on 115200
-  // Remember to choose the correct Baudrate on the Serial monitor!
   // This is just for debugging purposes
   Serial.begin(115200);
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  // Connect to the WiFi
   WiFi.begin(ssid, wifi_password);
 
   // Wait until the connection has been confirmed before continuing
@@ -73,9 +65,7 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  // Connect to MQTT Broker
   // client.connect returns a boolean value to let us know if the connection was successful.
-  // If the connection is failing, make sure you are using the correct MQTT Username and Password (Setup Earlier in the Instructable)
   if (client.connect(clientID, mqtt_username, mqtt_password)) {
     Serial.println("Connected to MQTT Broker!");
   }
