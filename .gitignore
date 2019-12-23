@@ -15,6 +15,7 @@ sub.mqtt.env/lib
 web/node_modules
 web/vendor
 web/package-lock.json
+web/config.js
 
 
 
