@@ -14,15 +14,15 @@ Adafruit_ADS1115 ads;
 
 // WiFi
 // Make sure to update this for your own WiFi network!
-const char* ssid = "catheaven";
-const char* wifi_password = "yuppicat159789";
+const char* ssid = "";
+const char* wifi_password = "";
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
-const char* mqtt_server = "192.168.86.235";
+const char* mqtt_server = "";
 const char* mqtt_topic = "ph";
 const char* mqtt_username = "moedepi";
-const char* mqtt_password = "SnooCatNaptime1019?";
+const char* mqtt_password = "";
 // The client id identifies the ESP8266 device. Think of it a bit like a hostname (Or just a name, like Greg).
 const char clientID[] = "phSensorA.haoshiAnalogPh:";
 
