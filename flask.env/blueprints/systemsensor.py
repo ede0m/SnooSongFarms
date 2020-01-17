@@ -40,8 +40,6 @@ def system_sensor():
 		if not request.json:
 			abort(400)
 
-		print(request.json)
-
 		sensor = SystemSensor(
 			sensor_id = request.json['sensorID'], 
 			reservoir_id = request.json['reservoirID'],
@@ -87,7 +85,6 @@ def persist_telemetry_batch():
 		abort(400)
 
 	batch = {"batch": list(map(ig, request.json['batch']))}
-	print(batch)
 
 	result = db.session.execute("""select "Sensor"."PersistTelemetryBatch"(
 		CAST(:batch AS "Sensor".sensor_telemetry[]))""", batch)
