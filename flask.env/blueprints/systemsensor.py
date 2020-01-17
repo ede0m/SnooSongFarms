@@ -8,31 +8,6 @@ system_sensor_api = Blueprint('system_sensor_api', __name__)
 # for mapping batch telemetry to postgres function sensor_telemetry array parameter
 ig = itemgetter("sensorID", "measurement", "value", "timestamp") 
 
-@system_sensor_api.route('/api/systemsensor', methods=['GET', 'POST'])
-def system_sensor():
-	
-	if request.method == 'GET':
-		
-		data = SystemSensor.query.all()
-		data = [r.as_dict() for r in data]
-		return jsonify(data)
-
-	else:
-		# CREATE new sensor
-		if not request.json:
-			abort(400)
-
-		sensor = SystemSensor(
-			sensorid = request.json['sensorID'], 
-			reservoirid = request.json['reservoirID'],
-			description = request.json['description']
-		)
-		
-		db.session.add(sensor)
-		db.session.commit()
-
-		return jsonify(request.json), 201
-
 
 @system_sensor_api.route('/api/systemsensor/<sensor_id>', methods=['POST'])
 def update_sensor(sensor_id):
@@ -49,6 +24,34 @@ def update_sensor(sensor_id):
 
 	db.session.commit()
 	return jsonify(sensor.as_dict()), 201
+
+
+@system_sensor_api.route('/api/systemsensor', methods=['GET', 'POST'])
+def system_sensor():
+	
+	if request.method == 'GET':
+		
+		data = SystemSensor.query.all()
+		data = [r.as_dict() for r in data]
+		return jsonify(data)
+
+	else:
+		# CREATE new sensor
+		if not request.json:
+			abort(400)
+
+		print(request.json)
+
+		sensor = SystemSensor(
+			sensor_id = request.json['sensorID'], 
+			reservoir_id = request.json['reservoirID'],
+			description = request.json['description']
+		)
+		
+		db.session.add(sensor)
+		db.session.commit()
+
+		return jsonify(request.json), 201
 
 
 
@@ -84,6 +87,7 @@ def persist_telemetry_batch():
 		abort(400)
 
 	batch = {"batch": list(map(ig, request.json['batch']))}
+	print(batch)
 
 	result = db.session.execute("""select "Sensor"."PersistTelemetryBatch"(
 		CAST(:batch AS "Sensor".sensor_telemetry[]))""", batch)

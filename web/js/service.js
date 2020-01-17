@@ -1,4 +1,4 @@
-var api_base_url = 'http://moedepi:5000/api/'; 
+var api_base_url = 'http://localhost:5000/api/'; 
 
 var types = {}
 
@@ -453,10 +453,11 @@ $( document ).ready(function() {
 		{
 			var desc = $('#sensor_desc_input').val();
 			var rid = $('#sensor_reservoir_id_select').val();
-			var sid = $('#sensor_id_label').text();
+			var sid = $('#sensor_id_input').val();
 			var data = {
 				"description" : desc,
-				"reservoirID" : parseInt(rid)
+				"reservoirID" : parseInt(rid),
+				"sensorID" : sid
 			}
 			
 			var url = api_base_url + "systemsensor/" + sid;

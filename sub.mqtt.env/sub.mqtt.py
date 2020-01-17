@@ -11,7 +11,7 @@ import config
 
 mqtt_username = config.MQTT_USERNAME
 mqtt_password = config.MQTT_PASSWORD
-mqtt_topic = config.MQTT_TOPIC
+mqtt_topics = config.MQTT_TOPICS
 mqtt_broker_ip = config.MQTT_BROKER_IP
 
 api_endpoint = config.BATCH_TELEMETRY_ENDPOINT
@@ -27,7 +27,8 @@ client.username_pw_set(mqtt_username, mqtt_password)
 def on_connect(client, userdata, flags, rc):
     # rc is the error code returned when connecting to the broker
     print("connected to modedpi broker : " + str(rc))
-    client.subscribe(mqtt_topic)
+    print(mqtt_topics)
+    client.subscribe(mqtt_topics)
     
 def on_message(client, userdata, msg):
 
