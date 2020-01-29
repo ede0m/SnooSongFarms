@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import request, jsonify, abort
-from models import db, SystemSensor
+from models import db, SystemSensor, SensorReading
 from operator import itemgetter
 
 system_sensor_api = Blueprint('system_sensor_api', __name__)
@@ -17,10 +17,12 @@ def update_sensor(sensor_id):
 
 	sensor = SystemSensor.query.filter_by(sensor_id=sensor_id).first()
 	
-	if request.json['reservoirID']:
+	if request.json.get('reservoirID') is not None:
 		sensor.reservoir_id = request.json['reservoirID']
-	if request.json['description']:
+	if request.json.get('description') is not None:
 		sensor.description = request.json['description']
+	if request.json.get('enabled') is not None:
+		sensor.enabled = request.json['enabled']
 
 	db.session.commit()
 	return jsonify(sensor.as_dict()), 201
@@ -43,7 +45,8 @@ def system_sensor():
 		sensor = SystemSensor(
 			sensor_id = request.json['sensorID'], 
 			reservoir_id = request.json['reservoirID'],
-			description = request.json['description']
+			description = request.json['description'],
+			enabled = False
 		)
 		
 		db.session.add(sensor)
@@ -52,6 +55,15 @@ def system_sensor():
 		return jsonify(request.json), 201
 
 
+@system_sensor_api.route('/api/telemetry/<sensor_id>', methods=['GET'])
+def get_telemetry_by_sensor(sensor_id):
+	
+	data = SensorReading.query.filter_by(sensor_id=sensor_id).order_by(SensorReading.timestamp.desc()).limit(10).all()
+	data = [r.as_dict() for r in data]
+	return jsonify(data), 201
+
+
+# ADDING TELEMETRY
 
 @system_sensor_api.route('/api/telemetry', methods=['POST'])
 def persist_telemetry():

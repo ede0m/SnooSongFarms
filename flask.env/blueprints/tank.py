@@ -77,20 +77,20 @@ def fishtank_telemetry(tank_id, time, measurement):
 			and timestamp BETWEEN NOW() - INTERVAL :time AND NOW()
 			order by timestamp asc """
 
-	result_ph = db.session.execute(sql, param)
+	result = db.session.execute(sql, param)
 
-	values_ph = []
-	times_ph = []
+	values = []
+	times = []
 
-	for r in result_ph:
-		values_ph.append(r[0])
-		times_ph.append(r[1])
+	for r in result:
+		values.append(r[0])
+		times.append(r[1])
 
 	# ... similar queries for other sensor data
 
 	result = {
-		'values' : values_ph,
-		'times' : times_ph
+		'values' : values,
+		'times' : times
 	}
 
 	return jsonify(result), 201

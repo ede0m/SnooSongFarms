@@ -1,4 +1,4 @@
-var api_base_url = 'http://moedepi:5000/api/'; 
+var api_base_url = 'http://localhost:5000/api/'; 
 
 var select_options = {};
 var chart_query_measurement = 'ph';
@@ -160,6 +160,7 @@ $( document ).ready(function() {
 			$.get(
 				url,
 				function(data) {
+					console.log(data);
 					RenderCharts(data, chart_query_measurement, title);
 					$('#metric_cards').css('display', 'flex');
 					$('#chart_time_filter').css('display', 'flex');

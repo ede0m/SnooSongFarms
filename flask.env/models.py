@@ -89,6 +89,7 @@ class SystemSensor(Base):
 	sensor_id = db.Column(db.String, unique=True, primary_key = True)
 	reservoir_id = db.Column(db.Integer)
 	description = db.Column(db.String)
+	enabled = db.Column(db.Boolean, default=False)
 
 class SensorReading(Base):
 	__tablename__ = 'SensorReadings'
