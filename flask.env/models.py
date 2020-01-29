@@ -5,7 +5,7 @@ import datetime
 db = SQLAlchemy()
 
 # DB defined Enums
-fish_types = ('unknown', 'neon_tetra', 'amano_shrimp')
+fish_types = ('unknown', 'neon_tetra', 'lemon_tetra', 'amano_shrimp', 'red_rili_shrimp')
 fish_types_enum = ENUM(*fish_types, name="fish_types")
 
  # Base data model for all objects
