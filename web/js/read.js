@@ -28,7 +28,10 @@ $.get(
 
 		var curr_sensor_enabled = sensor_enabled[$('#sensor_select').val()];
 		if (curr_sensor_enabled) {
-			$('#sensor_enable').prop('checked', true);
+			$('#sensor_enable').bootstrapToggle('on', true);
+		}
+		else {
+			$('#sensor_enable').bootstrapToggle('off', true);
 		}
 		// set to sensor's assigned reservoir
 		$('#reservoir_select').val(sensor_reservoir[$('#sensor_select').val()]);
@@ -70,6 +73,7 @@ $( document ).ready(function() {
 	    
 	    var enable = false;
 	    if (this.checked) {
+	    	console.log(this.checked);
 	        enable = true;
 	    }
 	    var url = api_base_url + "systemsensor/" + sensor_id;
@@ -93,7 +97,14 @@ $( document ).ready(function() {
 
 	$('#sensor_select').change(function(){
 		// set current sync status
-		$('#sensor_enable').prop('checked', sensor_enabled[$('#sensor_select').val()]);
+		var curr_sensor_enabled = sensor_enabled[$('#sensor_select').val()];
+		console.log(curr_sensor_enabled);
+		if (curr_sensor_enabled) {
+			$('#sensor_enable').bootstrapToggle('on', true);
+		}
+		else {
+			$('#sensor_enable').bootstrapToggle('off', true);
+		}
 		// set to sensor's assigned reservoir
 		$('#reservoir_select').val(sensor_reservoir[$('#sensor_select').val()]);
 		
@@ -109,7 +120,6 @@ function GetSensorData(sensor_id, n_records) {
 		api_base_url + "telemetry/" + $('#sensor_select').val() + "/" + n_records,
 		function(data) {
 			$.each(data, function(key, v) {
-				console.log(data);
 				var sensor_id = v.sensor_id;
 				var measurement = v.measurement;
 				var reservoir_id = v.reservoir_id;
