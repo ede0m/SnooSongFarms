@@ -1,6 +1,7 @@
 var api_base_url = 'http://localhost:5000/api/'; 
 var select_options = {};
 var sensor_enabled = {};
+var sensor_reservoir = {};
 
 $.get(
 	api_base_url + "reservoir",
@@ -20,15 +21,18 @@ $.get(
 		$.each(data, function(key, value) {
 	  		select_options['systemsensor'][value.sensor_id] = value.sensor_id + " : " + value.description;
 	  		sensor_enabled[value.sensor_id] = value.enabled;
+			sensor_reservoir[value.sensor_id] = value.reservoir_id;
 			// set fishtanks first
 			$('#sensor_select').append('<option value="'+ value.sensor_id +'">'+value.sensor_id+" : " + value.description+'</option>');
 		});
 
 		var curr_sensor_enabled = sensor_enabled[$('#sensor_select').val()];
-		if (curr_sensor_enabled){
+		if (curr_sensor_enabled) {
 			$('#sensor_enable').prop('checked', true);
 		}
-		GetSensorData($('#sensor_select').val());
+		// set to sensor's assigned reservoir
+		$('#reservoir_select').val(sensor_reservoir[$('#sensor_select').val()]);
+		GetSensorData($('#sensor_select').val(), 10);
 	}
 );
 
@@ -56,6 +60,11 @@ $( document ).ready(function() {
 			});
 	});
 
+	$('.n_readings').on('click', function(){
+		var n_rec = $(this).text();
+		$('#sensor_reading_table tbody').empty();
+		GetSensorData($('#sensor_select').val(), n_rec);
+	});
 
 	$('#sensor_enable').change(function() {
 	    
@@ -83,17 +92,21 @@ $( document ).ready(function() {
 	});
 
 	$('#sensor_select').change(function(){
+		// set current sync status
 		$('#sensor_enable').prop('checked', sensor_enabled[$('#sensor_select').val()]);
+		// set to sensor's assigned reservoir
+		$('#reservoir_select').val(sensor_reservoir[$('#sensor_select').val()]);
+		
 		$('#sensor_reading_table tbody').empty();
-		GetSensorData($('#sensor_select').val());
+		GetSensorData($('#sensor_select').val(), 10);
 	});
 
 });
 
 
-function GetSensorData(sensor_id) {
+function GetSensorData(sensor_id, n_records) {
 	$.get(
-		api_base_url + "telemetry/" + $('#sensor_select').val(),
+		api_base_url + "telemetry/" + $('#sensor_select').val() + "/" + n_records,
 		function(data) {
 			$.each(data, function(key, v) {
 				console.log(data);
@@ -105,10 +118,30 @@ function GetSensorData(sensor_id) {
 				var val = v.value;
 
 				var markup = "<tr><td>"+telemid+"</td><td>"+sensor_id+"</td><td>"+reservoir_id+"</td><td>"
-					+timestamp+"</td><td>"+measurement+"</td><td>"+val+"</td></tr>";
+					+timestamp+"</td><td>"+measurement+"</td><td>"+val+
+					"</td><td><button type='button' class='btn btn-danger del_data'>X</button></td></tr>";
 
 				$('#sensor_reading_table tbody:last-child').append(markup);
 			});
+
+			$(".del_data").on('click', function() {
+				var $row = $(this).closest("tr");
+				var t_id = $row.find("td")[0]['innerText'];
+				DeleteTelemetryPoint(t_id);
+			});
 		}
 	)
+}
+
+function DeleteTelemetryPoint(tid) {
+	var url = api_base_url + "telemetry/" + tid;
+	$.ajax({
+		url:url,
+		type:"POST",
+		contentType:"application/json; charset=utf-8",
+		dataType:"json",
+		success: function(res){
+			location.reload(true);
+		}
+	});
 }

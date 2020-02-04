@@ -40,7 +40,11 @@ function modules() {
     ]).pipe(gulp.dest('./vendor/jquery'));
 
   var chartjs = gulp.src('./node_modules/chart.js/dist/**/*')
-    .pipe(gulp.dest('./vendor/chartjs'))
+    .pipe(gulp.dest('./vendor/chartjs'));
+
+  var bs_toggle = gulp.src('./node_modules/bootstrap4-toggle/**/*')
+    .pipe(gulp.dest('./vendor/bootstrap4-toggle'));
+  
   return merge(bootstrap, jquery);
 }
 

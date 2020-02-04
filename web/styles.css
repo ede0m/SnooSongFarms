@@ -89,3 +89,28 @@ table td input {
 	margin-left: 40px;
 	margin-top: 10px;
 }
+
+.n_readings {
+	margin-left: 15px;
+	width: 50px;
+}
+
+.del_data {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	font-size: 10px;
+}
+
+.del_data:hover {
+	border-color: #000000;
+}
+
+#assign_sensor_button {
+	width: 75%;
+}
+
+#sensor_enable {
+	margin-left: 30px;
+}
+

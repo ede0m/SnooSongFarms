@@ -55,16 +55,24 @@ def system_sensor():
 		return jsonify(request.json), 201
 
 
-@system_sensor_api.route('/api/telemetry/<sensor_id>', methods=['GET'])
-def get_telemetry_by_sensor(sensor_id):
+@system_sensor_api.route('/api/telemetry/<sensor_id>/<n_records>', methods=['GET'])
+def get_telemetry_by_sensor(sensor_id, n_records):
 	
-	data = SensorReading.query.filter_by(sensor_id=sensor_id).order_by(SensorReading.timestamp.desc()).limit(10).all()
+	data = SensorReading.query.filter_by(sensor_id=sensor_id).order_by(SensorReading.timestamp.desc()).limit(n_records).all()
 	data = [r.as_dict() for r in data]
 	return jsonify(data), 201
 
 
-# ADDING TELEMETRY
+# REMOVING TELEMETRY
+@system_sensor_api.route('/api/telemetry/<tid>', methods=['POST'])
+def delete_telemetry(tid):
 
+	result = SensorReading.query.filter_by(telemetry_id=tid).delete()
+	db.session.commit()
+	return jsonify(result), 201
+
+
+# ADDING TELEMETRY
 @system_sensor_api.route('/api/telemetry', methods=['POST'])
 def persist_telemetry():
 	

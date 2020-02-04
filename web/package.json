@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "bootstrap": "4.3.1",
+    "bootstrap4-toggle": "^3.6.1",
     "chart.js": "^2.9.3",
     "jquery": "3.4.1"
   },

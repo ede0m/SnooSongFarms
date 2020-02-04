@@ -12,10 +12,12 @@
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap4-toggle/css/bootstrap4-toggle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <!--<script type="text/javascript" src="config.js"></script>-->
   <script src="vendor/chartjs/Chart.min.js"></script>
   <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap4-toggle/js/bootstrap4-toggle.min.js"></script>
   <script src="js/read.js"></script>
 
 </head>
@@ -56,6 +58,7 @@
               </div>
             </div>
 
+            <br>
             <div class="row">
               <div class="col-4">
                 <div id="query_by_header"><div class="name">Select Reservoir: </div></div>
@@ -66,26 +69,19 @@
                   </select>
                 </div>
               </div>
-              <div >
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-3">
                 <button id="assign_sensor_button" type="button" class="btn btn-success submit">Assign</button>
               </div>
-            </div>
-            <hr>
-            <br><br>
-
-            <div class="row">
               <div class="col-4">
-                <div id="query_by_header"><div class="name">Sync Status: </div></div>
+                  <input id="sensor_enable" type="checkbox" data-toggle="toggle" data-on="Ready" data-off="Not Ready" data-onstyle="success" data-offstyle="danger" data-width="75%">
               </div>
-              <div class="col-6">
-               <div class="form-group">
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="sensor_enable">
-                    <label class="custom-control-label" for="sensor_enable"></label>
-                  </div>
-                </div>
-              </div>
+
             </div>
+            <br>
             <hr>
 
           </div>
@@ -94,6 +90,12 @@
 
       <!-- Readings -->
       <br><br>
+      <div class="row">
+        <button class="n_readings" type="button" class="btn btn-success">10</button>
+        <button class="n_readings" type="button" class="btn btn-success">25</button>
+        <button class="n_readings" type="button" class="btn btn-success">50</button>
+      </div>
+      <br>
       <div id="sensor_readings">
         <table class="table table-hover table-dark table-responsive" id="sensor_reading_table">
           <thead>
@@ -104,6 +106,7 @@
                 <th scope="col"> timestamp </th>
                 <th scope="col"> measurement </th>
                 <th scope="col"> value </th>
+                <th scope="col"> delete? </th>
               </tr>
             </thead>
             <tbody></tbody>
