@@ -5,18 +5,14 @@ IoT sendor data persistence pipeline and reporting for my home aquaponics setup.
 ![diagram](snoosongfarms.png)
 
 
-### Currently Supporting:
+### Currently Supporting Sensor Telemetry for:
   
-  - PH: [Gravity Analog ph sensor](https://www.dfrobot.com/product-1782.html)
-  
-### Sensor Modules:
-  
- TODO: add these docs once i have finalized the design
+  - PH: [Gravity Analog ph sensor](https://www.dfrobot.com/product-1782.html) sensor module with [ESP8266Wifi](https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html) board.
   
 ### Pipeline: 
 
 - MQTT: 
-    - Publish from the sensor modules with the support of [ESP8266Wifi](https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html) and [PubSubClient](https://www.arduinolibraries.info/libraries/pub-sub-client)
+    - Publish from the sensor modules with the support of [PubSubClient](https://www.arduinolibraries.info/libraries/pub-sub-client)
     
     - [mosquitto](https://mosquitto.org/) - I run this broker on a raspberry pi 2
 
@@ -33,31 +29,7 @@ IoT sendor data persistence pipeline and reporting for my home aquaponics setup.
 	
 
 ### System Management & Reporting App:
--  interface to manage the system components and view data trends
--  just a cruddy jquery app
+-  interface to manage the system entities, sensor modules and view data trends
+-  just an unimpressive jquery app
 -  charting with [chartjs](https://www.chartjs.org/)
-
-
----------
-	
-
-TODO:
-
-- improved circuit design to eliminate need for arduino uno
-- finalize soldering and project box for new circuit (and pic of final product)
-- upload final arduino sketch(s)
-
---
-
-- REST restriction on max batch size
-- sub_client retry on failure 
-
--- 
-
-- finalize system architecture. update diagram. 
-- segmented network for these devices  
-
--- 
-- service to interact with Smart-Plug light timers
-
 
